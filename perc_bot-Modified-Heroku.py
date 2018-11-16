@@ -105,6 +105,8 @@ def get_shop_info():
     global items
     global inventories
     try:
+        cursor.execute('SELECT People FROM bot_data')
+        rawpeople=(cursor.fetchall())[0]
         people=json.load(open('bot_data/people.json','r'))
     except FileNotFoundError:
         get_names()
