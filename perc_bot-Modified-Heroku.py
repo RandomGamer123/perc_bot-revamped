@@ -1084,5 +1084,5 @@ async def on_message(message):
                                   'Please take note of what just happened and tell ~~hanss314~~ RandomGamer123 if they ask. '+
                                   '~~Watch this training video for more detailed instructions.~~ '+ 
                                   'The bot should still be operational.')
-token = open('bot_data/token.txt','r').readline().replace('\n','')
+token = process.env.TOKEN
 client.run(token)
