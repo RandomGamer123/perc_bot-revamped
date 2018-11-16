@@ -676,6 +676,11 @@ async def on_message(message):
             elif command == 'kill':
                 sys.exit()
                 
+            elif command == 'updatesqlpeople':
+                cursor.execute("""
+                    UPDATE bot_data
+                    SET People = 'Alfred Schmidt';
+                    """)
         #user commands
         if command=='percs':
             id=''
