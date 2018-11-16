@@ -17,6 +17,8 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
+cursor = conn.cursor()
+
 help_mess = "I am Perc Bot! Here are my commands! \n\n"
 help_mess+='Put (Round Brackets) around any multiple word arguments. Usually for item descriptions\n\n'
 help_mess+='`{}help`-Displays this message.\n'.format(prefix)
