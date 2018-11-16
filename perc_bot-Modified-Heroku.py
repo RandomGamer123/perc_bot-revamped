@@ -6,6 +6,7 @@ import re
 import traceback
 import sys
 import os
+import psycopg2
 
 prefix = '!'
 mtwow = '259943329028898816'#server id	
