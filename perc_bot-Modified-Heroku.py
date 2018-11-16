@@ -13,6 +13,10 @@ mtwow = '259943329028898816'#server id
 
 client = discord.Client()
 
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
 help_mess = "I am Perc Bot! Here are my commands! \n\n"
 help_mess+='Put (Round Brackets) around any multiple word arguments. Usually for item descriptions\n\n'
 help_mess+='`{}help`-Displays this message.\n'.format(prefix)
