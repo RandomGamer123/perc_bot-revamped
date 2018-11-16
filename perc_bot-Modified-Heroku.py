@@ -5,6 +5,7 @@ import json
 import re
 import traceback
 import sys
+import os
 
 prefix = '!'
 mtwow = '259943329028898816'#server id	
