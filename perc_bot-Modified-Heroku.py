@@ -906,9 +906,12 @@ async def on_message(message):
             
             for key, value in items.items():
                 if value['tier'] <= tier:
+                    maxtiermatch = true
                     try:
                         if value['maxtier'] < tier:
-                            continue
+                            maxtiermatch = false
+                    if maxtiermatch = false:
+                        continue
                     stock = value['amount']
                     if stock <0:
                         stock='Unlimited' 
