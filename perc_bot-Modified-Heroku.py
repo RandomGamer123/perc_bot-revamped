@@ -51,6 +51,7 @@ owner_help+='`{}shopupdate`-Updates bot\'s record of the store.\n'.format(prefix
 owner_help+='`{}settier` <users> <tier>-Sets a user\'s tier.\n'.format(prefix)
 owner_help+='`{}addtier` <users> <amount>-Adds to a user\'s tier.\n'.format(prefix)
 owner_help+='`{}remind [message]` -Reminds potentially bankrupt people to submit.\n\n'.format(prefix)
+owner_help+='SQL Commands (For debug/init use only and SHOULD NOT be used normally.):\n`{}updatesql[db] <text>` - Updates the database with the text provided, [db] can be `people`, `items`, or `inventories`.'.format(prefix)
 suff_help='This bot is a revamp of Percbot, originally made by hanss314, modified and currently hosted by RandomGamer123, ping him if any issues arise. \n Original credits message:\nThis bot was made by hanss314 and is hosted by some_nerd. Ping hanss314 if the bot acts strange and ping some_nerd if the bot doesn\'t act'
 
 inventories = {}
@@ -1162,20 +1163,30 @@ async def on_message(message):
             
         elif command == 'getsource':
             print("hi")
-            with open('perc_bot.py','rb') as source:
-                await client.send_file(message.author, source, content='Here is the source code. View at your own risk')
+            try:
+                with open('perc_bot.py','rb') as source:
+                    await client.send_file(message.author, source, content='Here is the source code. View at your own risk')
+            except:
+                await client.send_message(message.author, "The source could not be sent due to (likely) some issues with Heroku's file system. RandomGamer123 has been notified.")
+                RandomGamer123 = await client.get_user_info('156390113654341632')
+                await client.send_message(RandomGamer123,message.author.name+' used the getmodifiedsource command and it failed.')
         elif command == 'getmodifiedsource':
             print("hi-modified")
-            with open('perc_bot-Modified.py','rb') as source:
-                await client.send_file(message.author, source, content='Here is the modifed source code. View at your own risk.')
+            try:
+                with open('perc_bot-Modified-Heroku.py','rb') as source:
+                    await client.send_file(message.author, source, content='Here is the modifed source code. View at your own risk.')
+            except:
+                await client.send_message(message.author, "The source could not be sent due to (likely) some issues with Heroku's file system. RandomGamer123 has been notified.")
+                RandomGamer123 = await client.get_user_info('156390113654341632')
+                await client.send_message(RandomGamer123,message.author.name+' used the getmodifiedsource command and it failed.')
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
             client.send_message(message.channel, 'The bot could not send a message')
             return
         print(e)
         tb = e.__traceback__
-        hanss314 = await client.get_user_info('156390113654341632')
-        await client.send_message(hanss314,message.author.name+' '+command+'\n'+str(type(e))+str(e)+'\n'+str(traceback.extract_tb(tb)))
+        RandomGamer123 = await client.get_user_info('156390113654341632')
+        await client.send_message(RandomGamer123,message.author.name+' '+command+'\n'+str(type(e))+str(e)+'\n'+str(traceback.extract_tb(tb)))
         await client.send_message(message.channel, 'Something has gone wrong. ~~hanss314~~ RandomGamer123 has been notified. '+
                                   'Please take note of what just happened and tell ~~hanss314~~ RandomGamer123 if they ask. '+
                                   '~~Watch this training video for more detailed instructions.~~ '+ 
