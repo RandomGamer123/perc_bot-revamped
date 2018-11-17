@@ -706,23 +706,26 @@ async def on_message(message):
                 
             elif command == 'updatesqlpeople':
                 to_update = ' '.join(args)
+                await client.send_message(message.channel, "Update running! Info to be updated: {}".format(to_update))
                 cursor.execute("""
                     UPDATE bot_data
-                    SET People = %s;
+                    SET people = %s;
                     """,
                     (to_update,))
             elif command == 'updatesqlitems':
                 to_update = ' '.join(args)
+                await client.send_message(message.channel, "Update running! Info to be updated: {}".format(to_update))
                 cursor.execute("""
                     UPDATE bot_data
-                    SET Items = %s;
+                    SET items = %s;
                     """,
                     (to_update,))
             elif command == 'updatesqlinventories':
                 to_update = ' '.join(args)
+                await client.send_message(message.channel, "Update running! Info to be updated: {}".format(to_update))
                 cursor.execute("""
                     UPDATE bot_data
-                    SET Inventories = %s;
+                    SET inventories = %s;
                     """,
                     (to_update,))
         #user commands
