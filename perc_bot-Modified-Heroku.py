@@ -112,7 +112,7 @@ def get_shop_info():
             rawpeople = fetched[0]
             people=json.loads(rawpeople)
         else: 
-            people = fetched
+            get_names()
     except FileNotFoundError:
         get_names()
     for user in people.values():
@@ -134,7 +134,12 @@ def get_shop_info():
             rawitems = fetched[0]
             items=json.loads(rawitems)
         else: 
-            items = fetched
+            items={}
+            cursor.execute("""
+                UPDATE bot_data
+                SET items = %s;
+            """,
+            (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
     except FileNotFoundError:
         items={}
         cursor.execute("""
@@ -150,7 +155,16 @@ def get_shop_info():
             rawinv = fetched[0]
             inventories=json.loads(rawinv)
         else: 
-            inventories = fetched
+            for uid in people.keys():
+                inventories[uid]={}
+                for tier in items:
+                    for item in tier.keys():
+                        inventories[uid][item]=0
+            cursor.execute("""
+                UPDATE bot_data
+                SET inventories = %s;
+            """,
+            (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
     except FileNotFoundError:
         for uid in people.keys():
             inventories[uid]={}
@@ -193,7 +207,7 @@ def get_blacklist():
             rawbl = fetched[0]
             blacklist=json.loads(rawbl)
         else: 
-            blacklist = fetched
+            pass
     except FileNotFoundError:
         pass   
 def get_names():
