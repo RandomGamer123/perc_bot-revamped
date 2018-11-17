@@ -107,7 +107,11 @@ def get_shop_info():
     global inventories
     try:
         cursor.execute('SELECT people FROM bot_data')
-        rawpeople=(cursor.fetchall())[0]
+        fetched=cursor.fetchone()
+        if fetched != None:
+            rawpeople = fetched[0]
+        else: 
+            rawpeople = fetched
         people=json.loads(rawpeople)
     except FileNotFoundError:
         get_names()
@@ -125,7 +129,11 @@ def get_shop_info():
         
     try:
         cursor.execute('SELECT items FROM bot_data')
-        rawitems=(cursor.fetchall())[0]
+        fetched=cursor.fetchone()
+        if fetched != None:
+            rawitems = fetched[0]
+        else: 
+            rawitems = fetched
         items=json.loads(rawitems)
     except FileNotFoundError:
         items={}
@@ -137,7 +145,11 @@ def get_shop_info():
     
     try:
         cursor.execute('SELECT inventories FROM bot_data')
-        rawinv=(cursor.fetchall())[0]
+        fetched=cursor.fetchone()
+        if fetched != None:
+            rawinv = fetched[0]
+        else: 
+            rawinv = fetched
         inventories=json.loads(rawinv)
     except FileNotFoundError:
         for uid in people.keys():
@@ -176,8 +188,12 @@ def get_blacklist():
     global blacklist
     try:
         cursor.execute('SELECT blacklist FROM bot_data')
-        rawblacklist=(cursor.fetchall())[0]
-        blacklist=json.loads(rawpeople)
+        fetched=cursor.fetchone()
+        if fetched != None:
+            rawblacklist = fetched[0]
+        else: 
+            rawblacklist = fetched
+        blacklist=json.loads(rawblacklist)
     except FileNotFoundError:
         pass   
 def get_names():
