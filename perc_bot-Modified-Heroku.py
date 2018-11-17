@@ -908,9 +908,9 @@ async def on_message(message):
                 if value['tier'] <= tier:
                     maxtiermatch = true
                     try:
-                        if value['maxtier'] < tier:
+                        if (value['maxtier'] < tier):
                             maxtiermatch = false
-                    if maxtiermatch = false:
+                    if maxtiermatch == false:
                         continue
                     stock = value['amount']
                     if stock <0:
