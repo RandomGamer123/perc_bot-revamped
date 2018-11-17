@@ -109,7 +109,6 @@ def get_shop_info():
     try:
         cursor.execute('SELECT people FROM bot_data')
         fetched=cursor.fetchone()
-        print(fetched)
         if fetched != None:
             if fetched != "":
                 rawpeople = fetched[0]
@@ -125,7 +124,6 @@ def get_shop_info():
         for variable in should_haves.keys():
             if not variable in user.keys():
                 user[variable]=should_haves[variable]
-    print(people)
     cursor.execute("""
         UPDATE bot_data
         SET people = %s;
@@ -135,14 +133,12 @@ def get_shop_info():
     try:
         cursor.execute('SELECT items FROM bot_data')
         fetched=cursor.fetchone()
-        print(fetched)
         if fetched != None:
             if fetched != "":
                 rawitems = fetched[0]
                 items=json.loads(rawitems)
             else:
                 items={}
-                print(items)
                 cursor.execute("""
                     UPDATE bot_data
                     SET items = %s;
@@ -151,7 +147,6 @@ def get_shop_info():
                 conn.commit() 
         else: 
             items={}
-            print(items)
             cursor.execute("""
                 UPDATE bot_data
                 SET items = %s;
@@ -170,7 +165,6 @@ def get_shop_info():
     try:
         cursor.execute('SELECT inventories FROM bot_data')
         fetched=cursor.fetchone()
-        print(fetched)
         if fetched != None:
             if fetched != "":
                 rawinv = fetched[0]
@@ -218,13 +212,11 @@ def write_shop_info():
     """,
     (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
     conn.commit() 
-    print(items)
     cursor.execute("""
         UPDATE bot_data
         SET inventories = %s;
     """,
     (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
-    print(inventories)
     conn.commit() 
     get_names()   
 def write_blacklist():
