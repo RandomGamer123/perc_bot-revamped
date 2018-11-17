@@ -105,7 +105,7 @@ def get_shop_info():
     global items
     global inventories
     try:
-        cursor.execute('SELECT People FROM bot_data')
+        cursor.execute('SELECT people FROM bot_data')
         rawpeople=(cursor.fetchall())[0]
         people=json.loads(rawpeople)
     except FileNotFoundError:
@@ -118,24 +118,24 @@ def get_shop_info():
     
     cursor.execute("""
         UPDATE bot_data
-        SET People = %s;
+        SET people = %s;
     """,
     (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': '))))
         
     try:
-        cursor.execute('SELECT Items FROM bot_data')
+        cursor.execute('SELECT items FROM bot_data')
         rawitems=(cursor.fetchall())[0]
         items=json.loads(rawitems)
     except FileNotFoundError:
         items={}
         cursor.execute("""
             UPDATE bot_data
-            SET Items = %s;
+            SET items = %s;
         """,
         (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': '))))
     
     try:
-        cursor.execute('SELECT Inventories FROM bot_data')
+        cursor.execute('SELECT inventories FROM bot_data')
         rawinv=(cursor.fetchall())[0]
         inventories=json.loads(rawinv)
     except FileNotFoundError:
@@ -147,19 +147,19 @@ def get_shop_info():
                     
         cursor.execute("""
             UPDATE bot_data
-            SET Inventories = %s;
+            SET inventories = %s;
         """,
         (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': '))))
             
 def write_shop_info():
     cursor.execute("""
         UPDATE bot_data
-        SET Items = %s;
+        SET items = %s;
     """,
     (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': '))))
     cursor.execute("""
         UPDATE bot_data
-        SET Inventories = %s;
+        SET inventories = %s;
     """,
     (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': '))))
     get_names()   
@@ -167,14 +167,14 @@ def write_blacklist():
     global blacklist
     cursor.execute("""
         UPDATE bot_data
-        SET Blacklist = %s;
+        SET blacklist = %s;
     """,
     (json.dumps(blacklist,sort_keys=True,indent=4, separators=(',', ': '))))
         
 def get_blacklist():
     global blacklist
     try:
-        cursor.execute('SELECT Blacklist FROM bot_data')
+        cursor.execute('SELECT blacklist FROM bot_data')
         rawblacklist=(cursor.fetchall())[0]
         blacklist=json.loads(rawpeople)
     except FileNotFoundError:
