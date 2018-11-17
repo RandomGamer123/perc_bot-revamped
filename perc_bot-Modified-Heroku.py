@@ -107,7 +107,7 @@ def get_shop_info():
     try:
         cursor.execute('SELECT People FROM bot_data')
         rawpeople=(cursor.fetchall())[0]
-        people=json.load(open('bot_data/people.json','r'))
+        people=json.loads(rawpeople)
     except FileNotFoundError:
         get_names()
     for user in people.values():
@@ -115,19 +115,29 @@ def get_shop_info():
         for variable in should_haves.keys():
             if not variable in user.keys():
                 user[variable]=should_haves[variable]
-            
-    with open('bot_data/people.json','w') as writer:
-        writer.write(json.dumps(people,sort_keys=True,indent=4, separators=(',', ': ')))
+    
+    cursor.execute("""
+        UPDATE bot_data
+        SET People = %s;
+    """,
+    (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': '))))
         
     try:
-        items=json.load(open('bot_data/items.json','r'))
+        cursor.execute('SELECT Items FROM bot_data')
+        rawitems=(cursor.fetchall())[0]
+        items=json.loads(rawitems)
     except FileNotFoundError:
         items={}
-        with open('bot_data/items.json','w') as writer:
-            writer.write(json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')))
+        cursor.execute("""
+            UPDATE bot_data
+            SET Items = %s;
+        """,
+        (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': '))))
     
     try:
-        inventories=json.load(open('bot_data/inventories.json','r'))
+        cursor.execute('SELECT Inventories FROM bot_data')
+        rawinv=(cursor.fetchall())[0]
+        inventories=json.loads(rawinv)
     except FileNotFoundError:
         for uid in people.keys():
             inventories[uid]={}
@@ -135,24 +145,38 @@ def get_shop_info():
                 for item in tier.keys():
                     inventories[uid][item]=0
                     
-        with open('bot_data/inventories.json','w') as writer:
-            writer.write(json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')))
+        cursor.execute("""
+            UPDATE bot_data
+            SET Inventories = %s;
+        """,
+        (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': '))))
             
 def write_shop_info():
-    with open('bot_data/items.json','w') as writer:
-        writer.write(json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')))
-    with open('bot_data/inventories.json','w') as writer:
-        writer.write(json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')))
+    cursor.execute("""
+        UPDATE bot_data
+        SET Items = %s;
+    """,
+    (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': '))))
+    cursor.execute("""
+        UPDATE bot_data
+        SET Inventories = %s;
+    """,
+    (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': '))))
     get_names()   
 def write_blacklist():
     global blacklist
-    with open('bot_data/blacklist.json','w') as writer:
-        writer.write(json.dumps(blacklist))
+    cursor.execute("""
+        UPDATE bot_data
+        SET Blacklist = %s;
+    """,
+    (json.dumps(blacklist,sort_keys=True,indent=4, separators=(',', ': '))))
         
 def get_blacklist():
     global blacklist
     try:
-        blacklist=json.load(open('bot_data/blacklist.json','r'))
+        cursor.execute('SELECT Blacklist FROM bot_data')
+        rawblacklist=(cursor.fetchall())[0]
+        blacklist=json.loads(rawpeople)
     except FileNotFoundError:
         pass   
 def get_names():
@@ -164,7 +188,11 @@ def get_names():
             people[member.id]['name'] = member.name
         except KeyError:
             people[member.id]={'name':member.name}
-    open('bot_data/people.json','w').write(json.dumps(people,sort_keys=True,indent=4, separators=(',', ': ')))
+    cursor.execute("""
+        UPDATE bot_data
+        SET People = %s;
+    """,
+    (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': '))))
 
 def add_item(name,price,tier,amount=-1,description=''):
     global items
@@ -677,10 +705,26 @@ async def on_message(message):
                 sys.exit()
                 
             elif command == 'updatesqlpeople':
+                to_update = ' '.join(args)
                 cursor.execute("""
                     UPDATE bot_data
-                    SET People = 'Alfred Schmidt';
-                    """)
+                    SET People = %s;
+                    """,
+                    (to_update))
+            elif command == 'updatesqlitems':
+                to_update = ' '.join(args)
+                cursor.execute("""
+                    UPDATE bot_data
+                    SET Items = %s;
+                    """,
+                    (to_update))
+            elif command == 'updatesqlinventories':
+                to_update = ' '.join(args)
+                cursor.execute("""
+                    UPDATE bot_data
+                    SET Inventories = %s;
+                    """,
+                    (to_update))
         #user commands
         if command=='percs':
             id=''
