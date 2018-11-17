@@ -192,7 +192,7 @@ def get_names():
         UPDATE bot_data
         SET People = %s;
     """,
-    (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': '))))
+    (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': ')),))
 
 def add_item(name,price,tier,amount=-1,description=''):
     global items
