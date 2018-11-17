@@ -128,7 +128,7 @@ def get_shop_info():
         SET people = %s;
     """,
     (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': ')),))
-        
+    conn.commit()     
     try:
         cursor.execute('SELECT items FROM bot_data')
         fetched=cursor.fetchone()
@@ -144,6 +144,7 @@ def get_shop_info():
                 SET items = %s;
             """,
             (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
+            conn.commit() 
     except FileNotFoundError:
         items={}
         print(items)
@@ -152,6 +153,7 @@ def get_shop_info():
             SET items = %s;
         """,
         (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
+        conn.commit() 
     
     try:
         cursor.execute('SELECT inventories FROM bot_data')
@@ -172,6 +174,7 @@ def get_shop_info():
                 SET inventories = %s;
             """,
             (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
+            conn.commit() 
     except FileNotFoundError:
         for uid in people.keys():
             inventories[uid]={}
@@ -184,13 +187,14 @@ def get_shop_info():
             SET inventories = %s;
         """,
         (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
-            
+        conn.commit()     
 def write_shop_info():
     cursor.execute("""
         UPDATE bot_data
         SET items = %s;
     """,
     (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
+    conn.commit() 
     print(items)
     cursor.execute("""
         UPDATE bot_data
@@ -198,6 +202,7 @@ def write_shop_info():
     """,
     (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
     print(inventories)
+    conn.commit() 
     get_names()   
 def write_blacklist():
     global blacklist
@@ -206,7 +211,7 @@ def write_blacklist():
         SET blacklist = %s;
     """,
     (json.dumps(blacklist,sort_keys=True,indent=4, separators=(',', ': ')),))
-        
+    conn.commit()    
 def get_blacklist():
     global blacklist
     try:
@@ -233,7 +238,7 @@ def get_names():
         SET People = %s;
     """,
     (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': ')),))
-
+    conn.commit() 
 def add_item(name,price,tier,amount=-1,description=''):
     global items
         
@@ -752,6 +757,7 @@ async def on_message(message):
                     SET people = %s;
                     """,
                     (to_update,))
+                conn.commit() 
             elif command == 'updatesqlitems':
                 to_update = ' '.join(args)
                 await client.send_message(message.channel, "Update running! Info to be updated: {}".format(to_update))
@@ -760,6 +766,7 @@ async def on_message(message):
                     SET items = %s;
                     """,
                     (to_update,))
+                conn.commit() 
             elif command == 'updatesqlinventories':
                 to_update = ' '.join(args)
                 await client.send_message(message.channel, "Update running! Info to be updated: {}".format(to_update))
@@ -768,6 +775,7 @@ async def on_message(message):
                     SET inventories = %s;
                     """,
                     (to_update,))
+                conn.commit() 
         #user commands
         if command=='percs':
             id=''
