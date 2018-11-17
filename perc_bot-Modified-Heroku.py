@@ -710,21 +710,21 @@ async def on_message(message):
                     UPDATE bot_data
                     SET People = %s;
                     """,
-                    (to_update))
+                    (to_update,))
             elif command == 'updatesqlitems':
                 to_update = ' '.join(args)
                 cursor.execute("""
                     UPDATE bot_data
                     SET Items = %s;
                     """,
-                    (to_update))
+                    (to_update,))
             elif command == 'updatesqlinventories':
                 to_update = ' '.join(args)
                 cursor.execute("""
                     UPDATE bot_data
                     SET Inventories = %s;
                     """,
-                    (to_update))
+                    (to_update,))
         #user commands
         if command=='percs':
             id=''
