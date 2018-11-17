@@ -111,8 +111,11 @@ def get_shop_info():
         fetched=cursor.fetchone()
         print(fetched)
         if fetched != None:
-            rawpeople = fetched[0]
-            people=json.loads(rawpeople)
+            if fetched != "":
+                rawpeople = fetched[0]
+                people=json.loads(rawpeople)
+            else:
+                get_names()
         else: 
             get_names()
     except FileNotFoundError:
@@ -134,8 +137,18 @@ def get_shop_info():
         fetched=cursor.fetchone()
         print(fetched)
         if fetched != None:
-            rawitems = fetched[0]
-            items=json.loads(rawitems)
+            if fetched != "":
+                rawitems = fetched[0]
+                items=json.loads(rawitems)
+            else:
+                items={}
+                print(items)
+                cursor.execute("""
+                    UPDATE bot_data
+                    SET items = %s;
+                """,
+                (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
+                conn.commit() 
         else: 
             items={}
             print(items)
@@ -147,7 +160,6 @@ def get_shop_info():
             conn.commit() 
     except FileNotFoundError:
         items={}
-        print(items)
         cursor.execute("""
             UPDATE bot_data
             SET items = %s;
@@ -160,15 +172,27 @@ def get_shop_info():
         fetched=cursor.fetchone()
         print(fetched)
         if fetched != None:
-            rawinv = fetched[0]
-            inventories=json.loads(rawinv)
+            if fetched != "":
+                rawinv = fetched[0]
+                inventories=json.loads(rawinv)
+            else:
+                for uid in people.keys():
+                    inventories[uid]={}
+                    for tier in items:
+                        for item in tier.keys():
+                            inventories[uid][item]=0
+                cursor.execute("""
+                    UPDATE bot_data
+                    SET inventories = %s;
+                """,
+                (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
+                conn.commit() 
         else: 
             for uid in people.keys():
                 inventories[uid]={}
                 for tier in items:
                     for item in tier.keys():
                         inventories[uid][item]=0
-            print(inventories)
             cursor.execute("""
                 UPDATE bot_data
                 SET inventories = %s;
@@ -180,8 +204,7 @@ def get_shop_info():
             inventories[uid]={}
             for tier in items:
                 for item in tier.keys():
-                    inventories[uid][item]=0
-        print(inventories)            
+                    inventories[uid][item]=0          
         cursor.execute("""
             UPDATE bot_data
             SET inventories = %s;
@@ -218,10 +241,9 @@ def get_blacklist():
         cursor.execute('SELECT blacklist FROM bot_data')
         fetched=cursor.fetchone()
         if fetched != None:
-            rawbl = fetched[0]
-            blacklist=json.loads(rawbl)
-        else: 
-            pass
+            if fetched != "":
+                rawbl = fetched[0]
+                blacklist=json.loads(rawbl)
     except FileNotFoundError:
         pass   
 def get_names():
