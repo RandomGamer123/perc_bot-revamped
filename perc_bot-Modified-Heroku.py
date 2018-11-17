@@ -120,7 +120,7 @@ def get_shop_info():
         UPDATE bot_data
         SET people = %s;
     """,
-    (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': '))))
+    (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': ')),))
         
     try:
         cursor.execute('SELECT items FROM bot_data')
@@ -132,7 +132,7 @@ def get_shop_info():
             UPDATE bot_data
             SET items = %s;
         """,
-        (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': '))))
+        (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
     
     try:
         cursor.execute('SELECT inventories FROM bot_data')
@@ -149,19 +149,19 @@ def get_shop_info():
             UPDATE bot_data
             SET inventories = %s;
         """,
-        (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': '))))
+        (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
             
 def write_shop_info():
     cursor.execute("""
         UPDATE bot_data
         SET items = %s;
     """,
-    (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': '))))
+    (json.dumps(items,sort_keys=True,indent=4, separators=(',', ': ')),))
     cursor.execute("""
         UPDATE bot_data
         SET inventories = %s;
     """,
-    (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': '))))
+    (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
     get_names()   
 def write_blacklist():
     global blacklist
@@ -169,7 +169,7 @@ def write_blacklist():
         UPDATE bot_data
         SET blacklist = %s;
     """,
-    (json.dumps(blacklist,sort_keys=True,indent=4, separators=(',', ': '))))
+    (json.dumps(blacklist,sort_keys=True,indent=4, separators=(',', ': ')),))
         
 def get_blacklist():
     global blacklist
