@@ -1129,9 +1129,9 @@ async def on_message(message):
                 await client.send_message(message.author,'{} is not an item.'.format(' '.join(args)))
                 return
             
-            await client.send_message(message.channel, 'You have used {}. Nerd has been alerted'.format(args[0]))
-            nerd = await client.get_user_info('210285266814894081')
-            await client.send_message(nerd, '{} has used {}'.format(message.author.name,item))
+            await client.send_message(message.channel, 'You have used {}. ~~Nerd~~ Random has been alerted'.format(args[0]))
+            random = await client.get_user_info('156390113654341632')
+            await client.send_message(random, '{} has used {}'.format(message.author.name,item))
             inventories[id] = item_dict
             write_shop_info()
             
