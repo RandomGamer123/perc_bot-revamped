@@ -51,6 +51,7 @@ owner_help+='`{}shopupdate`-Updates bot\'s record of the store.\n'.format(prefix
 owner_help+='`{}settier` <users> <tier>-Sets a user\'s tier.\n'.format(prefix)
 owner_help+='`{}addtier` <users> <amount>-Adds to a user\'s tier.\n'.format(prefix)
 owner_help+='`{}remind [message]` -Reminds potentially bankrupt people to submit.\n\n'.format(prefix)
+owner_help+='`{}resetinv` - Resets and may fix inventories.\n\n'.format(prefix)
 owner_help+='SQL Commands (For debug/init use only and SHOULD NOT be used normally.):\n`{}updatesql[db] <text>` - Updates the database with the text provided, [db] can be `people`, `items`, or `inventories`. \n\n'.format(prefix)
 suff_help='This bot is a revamp of Percbot, originally made by hanss314, modified and currently hosted by RandomGamer123, ping him if any issues arise. \n Original credits message:\nThis bot was made by hanss314 and is hosted by some_nerd. Ping hanss314 if the bot acts strange and ping some_nerd if the bot doesn\'t act'
 
@@ -789,7 +790,20 @@ async def on_message(message):
                     SET inventories = %s;
                     """,
                     (to_update,))
-                conn.commit() 
+                conn.commit()
+            elif command == 'resetinv':
+                inventories = {}
+                for uid in people.keys():
+                    inventories[uid]={}
+                    for tier in items:
+                        for item in tier.keys():
+                            inventories[uid][item]=0
+                cursor.execute("""
+                    UPDATE bot_data
+                    SET inventories = %s;
+                """,
+                (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
+                conn.commit()
         #user commands
         if command=='percs':
             id=''
