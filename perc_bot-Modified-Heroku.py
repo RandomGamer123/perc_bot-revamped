@@ -1143,7 +1143,7 @@ async def on_message(message):
                 return
             
             await client.send_message(message.channel, 'You have used {}. ~~Nerd~~ Random has been alerted'.format(args[0]))
-            random = await client.get_user('156390113654341632')
+            random = await client.get_user_info('156390113654341632')
             await client.send_message(random, '{} has used {}'.format(message.author.name,item))
             inventories[id] = item_dict
             write_shop_info()
@@ -1196,9 +1196,9 @@ async def on_message(message):
             if success==0:
                 add_perc([message.author.id],-price)
                 await client.send_message(message.author,'You bought one {} for ¶{}. ~~Nerd~~ Random has been alerted.'.format(item,price))
-                nerd = await client.get_user('210285266814894081')
+                nerd = await client.get_user_info('210285266814894081')
                 await client.send_message(nerd, '{} has bought {}.'.format(message.author.name,item))
-                random = await client.get_user('156390113654341632')
+                random = await client.get_user_info('156390113654341632')
                 await client.send_message(random, '{} has bought {}.'.format(message.author.name,item))
             elif success==4:
                 await client.send_message(message.author,'{} is not an item.'.format(item,prefix))
@@ -1213,7 +1213,7 @@ async def on_message(message):
                     await client.send_file(message.author, source, content='Here is the source code. View at your own risk')
             except:
                 await client.send_message(message.author, "The source could not be sent due to (likely) some issues with Heroku's file system. RandomGamer123 has been notified.")
-                RandomGamer123 = await client.get_user('156390113654341632')
+                RandomGamer123 = await client.get_user_info('156390113654341632')
                 await client.send_message(RandomGamer123,message.author.name+' used the getmodifiedsource command and it failed.')
         elif command == 'getmodifiedsource':
             print("hi-modified")
@@ -1222,7 +1222,7 @@ async def on_message(message):
                     await client.send_file(message.author, source, content='Here is the modifed source code. View at your own risk.')
             except:
                 await client.send_message(message.author, "The source could not be sent due to (likely) some issues with Heroku's file system. RandomGamer123 has been notified.")
-                RandomGamer123 = await client.get_user('156390113654341632')
+                RandomGamer123 = await client.get_user_info('156390113654341632')
                 await client.send_message(RandomGamer123,message.author.name+' used the getmodifiedsource command and it failed.')
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
@@ -1230,7 +1230,7 @@ async def on_message(message):
             return
         print(e)
         tb = e.__traceback__
-        RandomGamer123 = await client.get_user('156390113654341632')
+        RandomGamer123 = await client.get_user_info('156390113654341632')
         await client.send_message(RandomGamer123,message.author.name+' '+command+'\n'+str(type(e))+str(e)+'\n'+str(traceback.extract_tb(tb)))
         await client.send_message(message.channel, 'Something has gone wrong. ~~hanss314~~ RandomGamer123 has been notified. '+
                                   'Please take note of what just happened and tell ~~hanss314~~ RandomGamer123 if they ask. '+
