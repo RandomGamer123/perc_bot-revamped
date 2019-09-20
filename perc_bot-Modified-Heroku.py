@@ -795,8 +795,8 @@ async def on_message(message):
                 inventories = {}
                 for uid in people.keys():
                     inventories[uid]={}
-                        for item in items.keys():
-                            inventories[uid][item]=0
+                    for item in items.keys():
+                        inventories[uid][item]=0
                 cursor.execute("""
                     UPDATE bot_data
                     SET inventories = %s;
