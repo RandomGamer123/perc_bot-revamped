@@ -1199,7 +1199,7 @@ async def on_message(message):
                 await client.send_message(message.author,'You bought one {} for ¶{}. ~~Nerd~~ Random has been alerted.'.format(item,price))
                 nerd = await client.get_user_info('210285266814894081')
                 await client.send_message(nerd, '{} has bought {}.'.format(message.author.name,item))
-                random = await client.get_user_info('156390113654341632')
+                random = discord.utils.get(client.get_all_members(), id='156390113654341632')
                 print(str(random))
                 await client.send_message(random, '{} has bought {}.'.format(message.author.name,item))
             elif success==4:
