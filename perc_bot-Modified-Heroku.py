@@ -12,6 +12,7 @@ prefix = '!'
 mtwow = '259943329028898816'#server id	
 
 client = discord.Client()
+print(str(discord.version_info))
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
