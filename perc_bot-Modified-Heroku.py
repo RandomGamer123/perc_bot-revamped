@@ -1201,6 +1201,7 @@ async def on_message(message):
                 await client.send_message(nerd, '{} has bought {}.'.format(message.author.name,item))
                 random = await client.get_user_info('156390113654341632')
                 await asyncio.sleep(1)
+                print('test')
                 print(str(random.id))
                 await client.send_message(random, '{} has bought {}.'.format(message.author.name,item))
             elif success==4:
