@@ -1236,7 +1236,7 @@ async def on_message(message):
                 member = message.author
                 ramtmtwow = client.get_server(mtwow)
                 await client.request_offline_members(ramtmtwow)
-                role = discord.utils.find(lambda role: role.id=='630910928187162624', ramtmtwow.roles)
+                role = discord.utils.find(lambda role: role.name=='S7C - Capitalist Percbot TWOW Contestant', ramtmtwow.roles)
                 await client.send_message(message.author, "Successfully signed up!")
                 await client.add_roles(member,role)
     except Exception as e:
