@@ -770,6 +770,7 @@ async def on_message(message):
                 sys.exit()
             elif command == 'updatepeople':
                 get_names()
+                await client.send_message(message.channel, "Database users updated!")
             elif command == 'updatesqlpeople':
                 to_update = ' '.join(args)
                 await client.send_message(message.channel, "Update running! Info to be updated: {}".format(to_update))
@@ -809,6 +810,7 @@ async def on_message(message):
                 """,
                 (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
                 conn.commit()
+                await client.send_message(message.channel, "Inventories reset!")
         #user commands
         if command=='percs':
             id=''
@@ -1232,7 +1234,8 @@ async def on_message(message):
         elif command == 'signup':
             if message.channel.id == signupchannelid:
                 member = message.author
-                role = get(member.server.roles, id="630910928187162624")
+                role = discord.utils.get(member.server.roles, id="630910928187162624")
+                await client.send_message(message.author, "Successfully signed up!")
                 await client.add_roles(member,role)
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
