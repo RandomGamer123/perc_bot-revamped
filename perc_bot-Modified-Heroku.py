@@ -26,6 +26,7 @@ cursor = conn.cursor()
 help_mess = "I am Perc Bot! Here are my commands! \n\n"
 help_mess+='Put (Round Brackets) around any multiple word arguments. Usually for item descriptions\n\n'
 help_mess+='`{}help`-Displays this message.\n'.format(prefix)
+help_mess+='`{}signup`-Only works in <#{}>, signs you up for the minitwow concerned.\n'.format(prefix,signupchannelid)
 help_mess+='`{}percs [user]`-See how many percs you have. Owners can ping someone in the message to see how many percs they have.\n'.format(prefix)
 help_mess+='`{}tier [user]`-See your tier. Owners can ping someone in the message to see their tier.\n'.format(prefix)
 help_mess+='`{}transacinfo [user]`-See transaction history. Owners can ping someone to see their history.\n'.format(prefix)
@@ -54,7 +55,8 @@ owner_help+='`{}shopupdate`-Updates bot\'s record of the store.\n'.format(prefix
 owner_help+='`{}settier` <users> <tier>-Sets a user\'s tier.\n'.format(prefix)
 owner_help+='`{}addtier` <users> <amount>-Adds to a user\'s tier.\n'.format(prefix)
 owner_help+='`{}remind [message]` -Reminds potentially bankrupt people to submit.\n'.format(prefix)
-owner_help+='`{}resetinv` - Resets and may fix inventories.\n\n'.format(prefix)
+owner_help+='`{}updatepeople` -Updates the people database. \n'.format(prefix)
+owner_help+='`{}resetinv` -Resets and may fix inventories.\n\n'.format(prefix)
 owner_help+='SQL Commands (For debug/init use only and SHOULD NOT be used normally.):\n`{}updatesql[db] <text>` - Updates the database with the text provided, [db] can be `people`, `items`, or `inventories`. \n\n'.format(prefix)
 suff_help='This bot is a revamp of Percbot, originally made by hanss314, modified and currently hosted by RandomGamer123, ping him if any issues arise. \n Original credits message:\nThis bot was made by hanss314 and is hosted by some_nerd. Ping hanss314 if the bot acts strange and ping some_nerd if the bot doesn\'t act'
 
