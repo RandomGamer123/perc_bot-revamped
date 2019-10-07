@@ -764,7 +764,8 @@ async def on_message(message):
             
             elif command == 'kill':
                 sys.exit()
-                
+            elif command == 'updatepeople':
+                get_names()
             elif command == 'updatesqlpeople':
                 to_update = ' '.join(args)
                 await client.send_message(message.channel, "Update running! Info to be updated: {}".format(to_update))
