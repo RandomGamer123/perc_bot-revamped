@@ -14,6 +14,8 @@ mtwow = '259943329028898816'#server id
 client = discord.Client()
 print(str(discord.version_info))
 
+signupchannelid = '322693626540851200'
+
 DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -1225,6 +1227,11 @@ async def on_message(message):
                 await client.send_message(message.author, "The source could not be sent due to (likely) some issues with Heroku's file system. RandomGamer123 has been notified.")
                 RandomGamer123 = await client.get_user_info('156390113654341632')
                 await client.send_message(RandomGamer123,message.author.name+' used the getmodifiedsource command and it failed.')
+        elif command == 'signup':
+            if message.channel.id == signupchannelid:
+                member = message.author
+                role = get(member.server.roles, id="630910928187162624")
+                await client.add_roles(member,role)
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
             client.send_message(message.channel, 'The bot could not send a message')
