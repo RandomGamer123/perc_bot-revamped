@@ -1240,11 +1240,11 @@ async def on_message(message):
                 role = discord.utils.find(lambda role: role.name=='S7C - Capitalist Percbot TWOW Contestant', ramtmtwow.roles)
                 webrsp = requests.post('https://random314.000webhostapp.com/mobiletwowvotingaction.php', data={'user':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':signupminitwowname,'targetuser':message.author.id,'targetusername':message.author.username})
                 webrspjson = webrsp.json()
-                if webrspjson[0] = 'success':
+                if webrspjson[0] == 'success':
                     await client.add_roles(member,role)
                     await client.send_message(message.author, "Successfully signed up!")
                 else:
-                    if webrspjson[1] = 'You have already signed up to this minitwow.':
+                    if webrspjson[1] == 'You have already signed up to this minitwow.':
                         await client.send_message(message.author, "You have already signed up to this minitwow, if this is incorrect, please contact Random.")
                     else:
                         await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted, your role should have been applied.")
