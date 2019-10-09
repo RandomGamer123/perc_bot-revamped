@@ -16,6 +16,7 @@ client = discord.Client()
 print(str(discord.version_info))
 
 signupchannelid = '322693626540851200'
+signupminitwowname = "Random's Random Mini-twow S7C (RAMT S7C)"
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -1230,7 +1231,6 @@ async def on_message(message):
                     await client.send_file(message.author, source, content='Here is the modifed source code. View at your own risk.')
             except:
                 await client.send_message(message.author, "The source could not be sent due to (likely) some issues with Heroku's file system. RandomGamer123 has been notified.")
-                RandomGamer123 = await client.get_user_info('156390113654341632')
                 await client.send_message(RandomGamer123,message.author.name+' used the getmodifiedsource command and it failed.')
         elif command == 'signup':
             if message.channel.id == signupchannelid:
@@ -1238,8 +1238,18 @@ async def on_message(message):
                 ramtmtwow = client.get_server(mtwow)
                 await client.request_offline_members(ramtmtwow)
                 role = discord.utils.find(lambda role: role.name=='S7C - Capitalist Percbot TWOW Contestant', ramtmtwow.roles)
-                await client.send_message(message.author, "Successfully signed up!")
-                await client.add_roles(member,role)
+                webrsp = requests.post('https://random314.000webhostapp.com/mobiletwowvotingaction.php', data={'user':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':signupminitwowname,'targetuser':message.author.id,'targetusername':message.author.username}
+                webrspjson = webrsp.json()
+                if webrspjson[0] = 'success':
+                    await client.add_roles(member,role)
+                    await client.send_message(message.author, "Successfully signed up!")
+                else:
+                    if webrspjson[1] = 'You have already signed up to this minitwow.':
+                        await client.send_message(message.author, "You have already signed up to this minitwow, if this is incorrect, please contact Random.")
+                    else:
+                        await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted, your role should have been applied.")
+                        RandomGamer123 = await client.get_user_info('156390113654341632')
+                        await client.send_message(RandomGamer123,message.author.name+" has failed to sign up for reason: "+webrspjson[1])
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
             client.send_message(message.channel, 'The bot could not send a message')
