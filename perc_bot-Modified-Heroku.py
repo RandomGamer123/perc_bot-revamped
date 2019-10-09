@@ -1238,7 +1238,7 @@ async def on_message(message):
                 ramtmtwow = client.get_server(mtwow)
                 await client.request_offline_members(ramtmtwow)
                 role = discord.utils.find(lambda role: role.name=='S7C - Capitalist Percbot TWOW Contestant', ramtmtwow.roles)
-                webrsp = requests.post('https://random314.000webhostapp.com/mobiletwowvotingaction.php', data={'user':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':signupminitwowname,'targetuser':message.author.id,'targetusername':message.author.username}
+                webrsp = requests.post('https://random314.000webhostapp.com/mobiletwowvotingaction.php', data={'user':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':signupminitwowname,'targetuser':message.author.id,'targetusername':message.author.username})
                 webrspjson = webrsp.json()
                 if webrspjson[0] = 'success':
                     await client.add_roles(member,role)
