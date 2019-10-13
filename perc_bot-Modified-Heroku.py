@@ -386,7 +386,7 @@ async def on_message(message):
         return
     
     command = message.content.split(' ')[0][len(prefix):].lower()
-    is_owner = message.author.id in ['156390113654341632','318305360823844865']
+    is_owner = message.author.id in ['156390113654341632','318305360823844865','632951510321594409']
     args = parse_args(message.content)
     
     if message.author in blacklist and not is_owner:
