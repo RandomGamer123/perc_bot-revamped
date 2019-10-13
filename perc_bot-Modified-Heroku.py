@@ -1234,6 +1234,7 @@ async def on_message(message):
                 await client.send_message(RandomGamer123,message.author.name+' used the getmodifiedsource command and it failed.')
         elif command == 'signup':
             if message.channel.id == signupchannelid:
+                get_names()
                 member = message.author
                 ramtmtwow = client.get_server(mtwow)
                 await client.request_offline_members(ramtmtwow)
@@ -1243,6 +1244,7 @@ async def on_message(message):
                 if webrspjson[0] == 'success':
                     await client.add_roles(member,role)
                     await client.send_message(message.author, "Successfully signed up!")
+                    set_tier([message.author.id],1,False,False)
                 else:
                     if webrspjson[1] == 'You have already signed up to this minitwow.':
                         await client.send_message(message.author, "You have already signed up to this minitwow, if this is incorrect, please contact Random.")
