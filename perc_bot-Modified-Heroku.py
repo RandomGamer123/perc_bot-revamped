@@ -1289,12 +1289,12 @@ async def on_message(message):
                 votestring = message.content[(len(prefix)+5):]
                 webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"respond",'deadlinebypass':0,'votes':votestring})
                 webrspjson = webrsp.json()
-                    if webrspjson[0] == 'success':
-                        await client.send_message(message.author, webrspjson[1])
-                    else:
-                        await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
-                        RandomGamer123 = await client.get_user_info('156390113654341632')
-                        await client.send_message(RandomGamer123,message.author.name+" has failed to vote for reason: "+webrspjson[1])
+                if webrspjson[0] == 'success':
+                    await client.send_message(message.author, webrspjson[1])
+                else:
+                    await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
+                    RandomGamer123 = await client.get_user_info('156390113654341632')
+                    await client.send_message(RandomGamer123,message.author.name+" has failed to vote for reason: "+webrspjson[1])
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
             client.send_message(message.channel, 'The bot could not send a message')
