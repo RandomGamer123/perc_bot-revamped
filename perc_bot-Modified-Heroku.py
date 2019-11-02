@@ -386,7 +386,7 @@ def get_item(name):
 @client.event
 async def on_message(message):
     if message.channel.is_private == True:
-        dmlogchannel = get_channel(dmlogchannelid)
+        dmlogchannel = client.get_channel(dmlogchannelid)
         embedobj = discord.Embed(description=message.content,timestamp=time.time())
         embedobj.set_author(name=message.author.name)
         await client.send_message(dmlogchannel, content="Sent by: "+message.author.name+", with ID: "+message.author.id, embed=embedobj)
