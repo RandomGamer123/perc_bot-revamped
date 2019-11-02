@@ -1267,10 +1267,7 @@ async def on_message(message):
         elif command == 'respond':
             get_names()
             member = message.author
-            ramtmtwow = client.get_server(mtwow)
-            await client.request_offline_members(ramtmtwow)
-            role = discord.utils.find(lambda role: role.name==aliverolename, ramtmtwow.roles)
-            if role in member.roles:
+            if True:
                 responsestring = message.content[(len(prefix)+8):]
                 webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"respond",'deadlinebypass':0,'response':responsestring})
                 webrspjson = webrsp.json()
