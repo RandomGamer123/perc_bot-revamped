@@ -1274,9 +1274,12 @@ async def on_message(message):
                 if webrspjson[0] == 'success':
                     await client.send_message(message.author, webrspjson[1])
                 else:
-                    await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
-                    RandomGamer123 = await client.get_user_info('156390113654341632')
-                    await client.send_message(RandomGamer123,message.author.name+" has failed to respond for reason: "+webrspjson[1])
+                    if webrspjson[1] == "You are not a contestant in this minitwow.":
+                        await client.send_message(message.author, "You are not a contestant in this minitwow, if this is incorrect, please contact Random.")
+                    else:
+                        await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
+                        RandomGamer123 = await client.get_user_info('156390113654341632')
+                        await client.send_message(RandomGamer123,message.author.name+" has failed to respond for reason: "+webrspjson[1])
             else:
                 await client.send_message(message.author, "You do not have the alive contestant role.")
         elif command == 'vote':
