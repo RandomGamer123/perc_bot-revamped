@@ -1263,7 +1263,7 @@ async def on_message(message):
                         await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted, your role should have been applied.")
                         RandomGamer123 = await client.get_user_info('156390113654341632')
                         await client.send_message(RandomGamer123,message.author.name+" has failed to sign up for reason: "+webrspjson[1])
-          elif command == 'respond':
+        elif command == 'respond':
             get_names()
             member = message.author
             ramtmtwow = client.get_server(mtwow)
@@ -1281,7 +1281,7 @@ async def on_message(message):
                         await client.send_message(RandomGamer123,message.author.name+" has failed to respond for reason: "+webrspjson[1])
             else:
                 await client.send_message(message.author, "You do not have the alive contestant role.")
-          elif command == 'vote':
+        elif command == 'vote':
             get_names()
             member = message.author
             ramtmtwow = client.get_server(mtwow)
