@@ -8,6 +8,7 @@ import sys
 import os
 import psycopg2
 import requests
+import time
 
 prefix = '!'
 mtwow = '259943329028898816'#server id	
@@ -18,7 +19,12 @@ print(str(discord.version_info))
 signupchannelid = '322693626540851200'
 signupminitwowname = "Random's Random Mini-twow S7C (RAMT S7C)"
 
+dmlogchannelid = '513295088227581966'
+
 DATABASE_URL = os.environ['DATABASE_URL']
+
+aliverolename = 'S7C - Capitalist Percbot TWOW Contestant'
+activeminitwowname = "Random's Random Mini-twow S7C (RAMT S7C)"
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 conn.autocommit = True
@@ -379,6 +385,11 @@ def get_item(name):
 
 @client.event
 async def on_message(message):
+    if message.channel.is_private == True:
+        dmlogchannel = get_channel(dmlogchannelid)
+        embedobj = discord.Embed(description=message.content,timestamp=time.time())
+        embedobj.set_author(name=message.author.name)
+        await client.send_message(dmlogchannel, content="Sent by: "+message.author.name+", with ID: "+message.author.id, embed=embedobj)
     global people
     global inventories
     global items
@@ -1238,7 +1249,7 @@ async def on_message(message):
                 member = message.author
                 ramtmtwow = client.get_server(mtwow)
                 await client.request_offline_members(ramtmtwow)
-                role = discord.utils.find(lambda role: role.name=='S7C - Capitalist Percbot TWOW Contestant', ramtmtwow.roles)
+                role = discord.utils.find(lambda role: role.name==aliverolename, ramtmtwow.roles)
                 webrsp = requests.post('https://random314.000webhostapp.com/mobiletwowvotingaction.php', data={'user':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':signupminitwowname,'targetuser':message.author.id,'targetusername':message.author.name})
                 webrspjson = webrsp.json()
                 if webrspjson[0] == 'success':
@@ -1252,6 +1263,38 @@ async def on_message(message):
                         await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted, your role should have been applied.")
                         RandomGamer123 = await client.get_user_info('156390113654341632')
                         await client.send_message(RandomGamer123,message.author.name+" has failed to sign up for reason: "+webrspjson[1])
+          elif command == 'respond':
+            get_names()
+            member = message.author
+            ramtmtwow = client.get_server(mtwow)
+            await client.request_offline_members(ramtmtwow)
+            role = discord.utils.find(lambda role: role.name==aliverolename, ramtmtwow.roles)
+            if role in member.roles:
+                responsestring = message.content[(len(prefix)+8):]
+                webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"respond",'deadlinebypass':0,'response':responsestring})
+                webrspjson = webrsp.json()
+                    if webrspjson[0] == 'success':
+                        await client.send_message(message.author, webrspjson[1])
+                    else:
+                        await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
+                        RandomGamer123 = await client.get_user_info('156390113654341632')
+                        await client.send_message(RandomGamer123,message.author.name+" has failed to respond for reason: "+webrspjson[1])
+            else:
+                await client.send_message(message.author, "You do not have the alive contestant role.")
+          elif command == 'vote':
+            get_names()
+            member = message.author
+            ramtmtwow = client.get_server(mtwow)
+            if True:
+                votestring = message.content[(len(prefix)+5):]
+                webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"respond",'deadlinebypass':0,'votes':votestring})
+                webrspjson = webrsp.json()
+                    if webrspjson[0] == 'success':
+                        await client.send_message(message.author, webrspjson[1])
+                    else:
+                        await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
+                        RandomGamer123 = await client.get_user_info('156390113654341632')
+                        await client.send_message(RandomGamer123,message.author.name+" has failed to vote for reason: "+webrspjson[1])
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
             client.send_message(message.channel, 'The bot could not send a message')
