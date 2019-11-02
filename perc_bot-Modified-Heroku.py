@@ -1273,12 +1273,12 @@ async def on_message(message):
                 responsestring = message.content[(len(prefix)+8):]
                 webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"respond",'deadlinebypass':0,'response':responsestring})
                 webrspjson = webrsp.json()
-                    if webrspjson[0] == 'success':
-                        await client.send_message(message.author, webrspjson[1])
-                    else:
-                        await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
-                        RandomGamer123 = await client.get_user_info('156390113654341632')
-                        await client.send_message(RandomGamer123,message.author.name+" has failed to respond for reason: "+webrspjson[1])
+                if webrspjson[0] == 'success':
+                    await client.send_message(message.author, webrspjson[1])
+                else:
+                    await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
+                    RandomGamer123 = await client.get_user_info('156390113654341632')
+                    await client.send_message(RandomGamer123,message.author.name+" has failed to respond for reason: "+webrspjson[1])
             else:
                 await client.send_message(message.author, "You do not have the alive contestant role.")
         elif command == 'vote':
