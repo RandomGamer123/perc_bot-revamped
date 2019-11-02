@@ -9,6 +9,7 @@ import os
 import psycopg2
 import requests
 import time
+import datetime
 
 prefix = '!'
 mtwow = '259943329028898816'#server id	
@@ -387,7 +388,7 @@ def get_item(name):
 async def on_message(message):
     if message.channel.is_private == True:
         dmlogchannel = client.get_channel(dmlogchannelid)
-        embedobj = discord.Embed(description=message.content,timestamp=time.time())
+        embedobj = discord.Embed(description=message.content,timestamp=datetime.datetime.utcfromtimestamp(time.time()))
         embedobj.set_author(name=message.author.name)
         await client.send_message(dmlogchannel, content="Sent by: "+message.author.name+", with ID: "+message.author.id, embed=embedobj)
     global people
