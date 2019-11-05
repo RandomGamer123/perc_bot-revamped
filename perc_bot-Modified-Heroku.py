@@ -1181,6 +1181,8 @@ async def on_message(message):
             item = ''
             try:
                 item = get_item(' '.join(args))
+            print(item)
+            print(people[message.author.id]['tier'])
             except KeyError:
                 for key, value in items.items():
                     if ' '.join(args).lower()==key.lower():
