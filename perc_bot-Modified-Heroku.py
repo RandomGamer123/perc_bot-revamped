@@ -1179,10 +1179,10 @@ async def on_message(message):
                 
             price = 0
             item = ''
-            try:
-                item = get_item(' '.join(args))
             print(item)
             print(people[message.author.id]['tier'])
+            try:
+                item = get_item(' '.join(args))
             except KeyError:
                 for key, value in items.items():
                     if ' '.join(args).lower()==key.lower():
