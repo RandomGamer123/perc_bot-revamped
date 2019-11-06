@@ -1292,7 +1292,7 @@ async def on_message(message):
             ramtmtwow = client.get_server(mtwow)
             if True:
                 votestring = message.content[(len(prefix)+5):]
-                webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"respond",'deadlinebypass':0,'votes':votestring})
+                webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"vote",'deadlinebypass':0,'votes':votestring})
                 webrspjson = webrsp.json()
                 if webrspjson[0] == 'success':
                     await client.send_message(message.author, webrspjson[1])
