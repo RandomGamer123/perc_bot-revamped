@@ -38,6 +38,7 @@ help_mess+='`{}help`-Displays this message.\n'.format(prefix)
 help_mess+='`{}signup`-Only works in <#{}>, signs you up for the minitwow concerned.\n'.format(prefix,signupchannelid)
 help_mess+='`{}respond [response]`- [May give an error message when you use it when it is not enabled.] Only works for alive contestants, submits your response to the minitwow. I personally take your latest submission (or submissions) if you submit multiple, you can always manually clarify to me. \n'.format(prefix)
 help_mess+='`{}vote [votes]`- [May give an error message when you use it when it is not enabled.] Submits your vote(s) to the minitwow. Seperate your votes, if you have multiple, using commas, eg. `[ALPHA ABCDE],[BETA EDCBA]`\n'.format(prefix)
+help_mess+='`{}generatescreen [screenname]`- [May give an error message when you use it when it is not voting.] Generates a series of voting screens based on the 4 capital alphabetic characters given in the screenname provided.\n'.format(prefix)
 help_mess+='`{}percs [user]`-See how many percs you have. Owners can ping someone in the message to see how many percs they have.\n'.format(prefix)
 help_mess+='`{}tier [user]`-See your tier. Owners can ping someone in the message to see their tier.\n'.format(prefix)
 help_mess+='`{}transacinfo [user]`-See transaction history. Owners can ping someone to see their history.\n'.format(prefix)
@@ -1300,6 +1301,17 @@ async def on_message(message):
                     await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
                     RandomGamer123 = await client.get_user_info('156390113654341632')
                     await client.send_message(RandomGamer123,message.author.name+" has failed to vote for reason: "+webrspjson[1])
+        elif command == 'generatescreen':
+            get_names()
+            screenname = message.content[(len(prefix)+15):]
+            webrsp = requests.post('https://random314.000webhostapp.com/votingscreenrequester.php', data={'minitwow':activeminitwowname,'screenname':screenname})
+            webrspjson = webrsp.json()
+            if webrspjson[0] == 'success':
+                await client.send_message(message.author, webrspjson[3])
+            else:
+                await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
+                RandomGamer123 = await client.get_user_info('156390113654341632')
+                await client.send_message(RandomGamer123,message.author.name+" has failed to vote for reason: "+webrspjson[1])
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
             client.send_message(message.channel, 'The bot could not send a message')
