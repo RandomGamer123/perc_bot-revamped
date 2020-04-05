@@ -258,6 +258,7 @@ def get_blacklist():
         pass   
 def get_names():
     global people
+    global inventories
     for server in client.servers:
         client.request_offline_members(client.get_server(server))
     for member in client.get_all_members():
@@ -265,12 +266,23 @@ def get_names():
             people[member.id]['name'] = member.name
         except KeyError:
             people[member.id]={'name':member.name}
+        try:
+            inventories[member.id]['name'] = member.name
+        except KeyError:
+            inventories[member.id]={}
     cursor.execute("""
         UPDATE bot_data
         SET People = %s;
     """,
     (json.dumps(people,sort_keys=True,indent=4, separators=(',', ': ')),))
     conn.commit() 
+    cursor.execute("""
+        UPDATE bot_data
+        SET inventories = %s;
+    """,
+    (json.dumps(inventories,sort_keys=True,indent=4, separators=(',', ': ')),))
+    conn.commit()
+    get_shop_info()
 def add_item(name,price,tier,amount=-1,description=''):
     global items
         
