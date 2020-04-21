@@ -784,7 +784,7 @@ async def on_message(message):
                 to_send = ' '.join(args)
                 shopmtwow = client.get_server(mtwow)
                 await client.request_offline_members(shopmtwow)
-                pbrole = discord.utils.find(lambda role: role.name=='S7MicroNTS', shopmtwow.roles)
+                pbrole = discord.utils.find(lambda role: role.name=='Needs to Submit', shopmtwow.roles)
                 for member in shopmtwow.members:
                     if pbrole in member.roles:
                         try:
