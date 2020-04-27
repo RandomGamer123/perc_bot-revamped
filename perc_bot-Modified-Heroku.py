@@ -1289,6 +1289,9 @@ async def on_message(message):
                 webrsp = requests.post('https://random314.000webhostapp.com/botapi.php', data={'sender':client.user.id,'token':os.environ['RAMT_API_KEY'],'minitwow':activeminitwowname,'user':message.author.id,'username':message.author.name,'mode':"respond",'deadlinebypass':0,'response':responsestring})
                 webrspjson = webrsp.json()
                 if webrspjson[0] == 'success':
+                    if webrspjson[2] == 'signup-r':
+                        role = discord.utils.find(lambda role: role.name==aliverolename, ramtmtwow.roles)
+                        await client.add_roles(member,role)
                     await client.send_message(message.author, webrspjson[1])
                 else:
                     if webrspjson[1] == "You are not a contestant in this minitwow.":
