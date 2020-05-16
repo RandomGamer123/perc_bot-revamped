@@ -1129,6 +1129,7 @@ async def on_message(message):
             
             
             for key, value in item_dict.items():
+                print(value)
                 if int(value)>0:
                     item_str+='{}: {}\n'.format(key,value)
             if len(item_str)==0:
