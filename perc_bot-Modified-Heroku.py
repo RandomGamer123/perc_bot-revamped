@@ -32,13 +32,15 @@ conn.autocommit = True
 
 cursor = conn.cursor()
 
+legal_mess = "This command and all subcommands under this command involve sending, retrieving, and storing data using random314.000webhostapp.com. By using this command you agree to the terms and conditions and privacy policy for random314.000webhostapp.com, which can be found by viewing Rule 34 in the #rules channel (<https://discordapp.com/channels/259943329028898816/318300363226742787/726088165705908255>) or by typing in the command `!random314website`."
+
 help_mess = "I am Perc Bot! Here are my commands! \n\n"
 help_mess+='Put (Round Brackets) around any multiple word arguments. Usually for item descriptions\n\n'
 help_mess+='`{}help`-Displays this message.\n'.format(prefix)
-help_mess+='`{}signup`-Only works in <#{}>, signs you up for the minitwow concerned.\n'.format(prefix,signupchannelid)
-help_mess+='`{}respond [response]`- [May give an error message when you use it when it is not enabled.] Only works for alive contestants, submits your response to the minitwow. I personally take your latest submission (or submissions) if you submit multiple, you can always manually clarify to me. \n'.format(prefix)
-help_mess+='`{}vote [votes]`- [May give an error message when you use it when it is not enabled.] Submits your vote(s) to the minitwow. Seperate your votes, if you have multiple, using commas, eg. `[ALPHA ABCDE],[BETA EDCBA]`\n'.format(prefix)
-help_mess+='`{}generatescreen [screenname]`- [May give an error message when you use it when it is not voting.] Generates a series of voting screens based on the 4 capital alphabetic characters given in the screenname provided. Use `MS` or `megascreen` as the screenname to generate the megascreen.\n'.format(prefix)
+help_mess+='`{}signup`-Only works in <#{}>, signs you up for the minitwow concerned. {}\n'.format(prefix,signupchannelid,legal_mess)
+help_mess+='`{}respond [response]`- [May give an error message when you use it when it is not enabled.] Only works for alive contestants, submits your response to the minitwow. I personally take your latest submission (or submissions) if you submit multiple, you can always manually clarify to me. {}\n'.format(prefix,legal_mess)
+help_mess+='`{}vote [votes]`- [May give an error message when you use it when it is not enabled.] Submits your vote(s) to the minitwow. Seperate your votes, if you have multiple, using commas, eg. `[ALPHA ABCDE],[BETA EDCBA]` {}\n'.format(prefix,legal_mess)
+help_mess+='`{}generatescreen [screenname]`- [May give an error message when you use it when it is not voting.] Generates a series of voting screens based on the 4 capital alphabetic characters given in the screenname provided. Use `MS` or `megascreen` as the screenname to generate the megascreen. {}\n'.format(prefix,legal_mess)
 help_mess+='`{}percs [user]`-See how many percs you have. Owners can ping someone in the message to see how many percs they have.\n'.format(prefix)
 help_mess+='`{}tier [user]`-See your tier. Owners can ping someone in the message to see their tier.\n'.format(prefix)
 help_mess+='`{}transacinfo [user]`-See transaction history. Owners can ping someone to see their history.\n'.format(prefix)
@@ -50,6 +52,7 @@ help_mess+='`{}buy <item>`-Buy an item from the shop\n'.format(prefix)
 help_mess+='`{}useitem <item>`-Uses an item in your inventory. Then DMs nerd so he knows. \n'.format(prefix)
 help_mess+='`{}getsource`-Get the bot\'s source code. (Before modification)\n'.format(prefix)
 help_mess+='`{}getmodifiedsource`-Get the bot\'s source code. (After modification)\n\n'.format(prefix)
+help_mess+='`{}random314website` -Get links to the terms and conditions and privacy policy attached to the commands {}signup, {}respond, {}vote, {}generatescreen and all subcommands of {}onlinevote which have connections to an external website.'.format(prefix,prefix,prefix,prefix,prefix,prefix)
 owner_help='**Owner Only**\n\n'
 owner_help+='`{}transac <users> <amount>`-Give or take percs from mentioned users. Amount should be a negative number to remove percs.\n'.format(prefix)
 owner_help+='`{}add <item> <cost> <tier> [amount] [description]`-Adds item with the price/tier specified. Sets amount not add. Amount defaults to infinity.\n'.format(prefix)
@@ -1331,6 +1334,8 @@ async def on_message(message):
                 await client.send_message(message.author, "Backend database failure for reason: "+webrspjson[1]+"\nRandom has been contacted.")
                 RandomGamer123 = await client.get_user_info('156390113654341632')
                 await client.send_message(RandomGamer123,message.author.name+" has failed to vote for reason: "+webrspjson[1])
+        elif command == 'random314website':
+            await client.send_message(message.channel,"The website can be accessed at <https://random314.000webhostapp.com/twowvoting.html> with its attached Terms and Conditions and Privacy Policy which apply to the website, the mobile app, and the commands that link to it, featuring {}signup, {}respond, {}vote, {}generatescreen, and all subcommands under {}onlinevote attached below:\nTerms and Conditions: <https://random314.000webhostapp.com/termsandconditions.txt>\nPrivacy Policy: <https://random314.000webhostapp.com/gdprprivacypolicy.txt>".format(prefix,prefix,prefix,prefix,prefix))
     except Exception as e:
         if type(e)==discord.errors.Forbidden:
             client.send_message(message.channel, 'The bot could not send a message')
