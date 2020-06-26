@@ -32,7 +32,8 @@ conn.autocommit = True
 
 cursor = conn.cursor()
 
-legal_mess = "This command and all subcommands under this command involve sending, retrieving, and storing data using random314.000webhostapp.com. By using this command you agree to the terms and conditions and privacy policy for random314.000webhostapp.com, which can be found by viewing Rule 34 in the #rules channel (<https://discordapp.com/channels/259943329028898816/318300363226742787/726088165705908255>) or by typing in the command `!random314website`."
+legal_mess = "This command requires sending data to an external website, and using this command bounds you to the terms and conditions and privacy policy of it."
+legal_mess2 = "The commands {}signup, {}respond, {}vote, {}generatescreen and all subcommands of {}onlinevote involve sending, retrieving, and storing data using random314.000webhostapp.com. By using the aforementioned commands and subcommands you agree to the terms and conditions and privacy policy for random314.000webhostapp.com, which can be found by viewing Rule 34 in the #rules channel (<https://discordapp.com/channels/259943329028898816/318300363226742787/726088165705908255>) or by typing in the command `{}random314website`.\n".format(prefix,prefix,prefix,prefix,prefix,prefix)
 
 help_mess = "I am Perc Bot! Here are my commands! \n\n"
 help_mess+='Put (Round Brackets) around any multiple word arguments. Usually for item descriptions\n\n'
@@ -74,6 +75,8 @@ owner_help+='`{}remind [message]` -Reminds potentially bankrupt people to submit
 owner_help+='`{}updatepeople` -Updates the people database. \n'.format(prefix)
 owner_help+='`{}resetinv` -Resets and may fix inventories.\n\n'.format(prefix)
 owner_help+='SQL Commands (For debug/init use only and SHOULD NOT be used normally.):\n`{}updatesql[db] <text>` - Updates the database with the text provided, [db] can be `people`, `items`, or `inventories`. \n\n'.format(prefix)
+suff_help=''
+suff_help+=legalmess2
 suff_help='This bot is a revamp of Percbot, originally made by hanss314, modified and currently hosted by RandomGamer123, ping him if any issues arise. \n Original credits message:\nThis bot was made by hanss314 and is hosted by some_nerd. Ping hanss314 if the bot acts strange and ping some_nerd if the bot doesn\'t act'
 
 inventories = {}
