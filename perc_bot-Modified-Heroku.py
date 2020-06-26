@@ -75,9 +75,9 @@ owner_help+='`{}remind [message]` -Reminds potentially bankrupt people to submit
 owner_help+='`{}updatepeople` -Updates the people database. \n'.format(prefix)
 owner_help+='`{}resetinv` -Resets and may fix inventories.\n\n'.format(prefix)
 owner_help+='SQL Commands (For debug/init use only and SHOULD NOT be used normally.):\n`{}updatesql[db] <text>` - Updates the database with the text provided, [db] can be `people`, `items`, or `inventories`. \n\n'.format(prefix)
-suff_help=''
-suff_help+=legalmess2
-suff_help='This bot is a revamp of Percbot, originally made by hanss314, modified and currently hosted by RandomGamer123, ping him if any issues arise. \n Original credits message:\nThis bot was made by hanss314 and is hosted by some_nerd. Ping hanss314 if the bot acts strange and ping some_nerd if the bot doesn\'t act'
+
+suff_help='This bot is a revamp of Percbot, originally made by hanss314, modified and currently hosted by RandomGamer123, ping him if any issues arise. \n Original credits message:\nThis bot was made by hanss314 and is hosted by some_nerd. Ping hanss314 if the bot acts strange and ping some_nerd if the bot doesn\'t act \n'
+suff_help+=legal_mess2
 
 inventories = {}
 items = {}
