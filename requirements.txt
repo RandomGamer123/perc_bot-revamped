@@ -1,3 +1,3 @@
-discord.py==0.16.12
+discord.py-unofficial
 psycopg2
 requests
