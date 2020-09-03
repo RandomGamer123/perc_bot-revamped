@@ -1,5 +1,5 @@
 import csv
-import discord
+import discord_unofficial as discord
 import asyncio
 import json
 import re
