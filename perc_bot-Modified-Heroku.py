@@ -129,7 +129,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member_that_joined):
-    if (os.environ["BANHONDA"]):
+    if (os.environ["BANHONDA"] == "BAN THOSE ALTS YOU CAN DO IT"):
         if(member.server.id != mtwow):
             return
         if("h0nde" in member.name.lower()):
