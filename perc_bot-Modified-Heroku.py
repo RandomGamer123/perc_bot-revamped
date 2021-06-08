@@ -126,7 +126,15 @@ async def on_ready():
     get_shop_info()
     get_blacklist()
     await client.change_presence(game=discord.Game(name='{}help | Remade by RandomGamer123 -Originally made by hanss314'.format(prefix),type=0))
-    
+
+@client.event
+async def on_member_join(member_that_joined):
+    if (os.environ["BANHONDA"]):
+        if(member.server.id != mtwow):
+            return
+        if("h0nde" in member.name.lower()):
+            client.ban(member)
+
 def get_shop_info():
     global people
     global items
