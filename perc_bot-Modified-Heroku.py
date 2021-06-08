@@ -130,10 +130,10 @@ async def on_ready():
 @client.event
 async def on_member_join(member_that_joined):
     if (os.environ["BANHONDA"] == "BAN THOSE ALTS YOU CAN DO IT"):
-        if(member.server.id != mtwow):
+        if(member_that_joined.server.id != mtwow):
             return
-        if("h0nde" in member.name.lower()):
-            client.ban(member)
+        if("h0nde" in member_that_joined.name.lower()):
+            client.ban(member_that_joined)
 
 def get_shop_info():
     global people
